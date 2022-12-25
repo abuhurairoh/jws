@@ -1,0 +1,66 @@
+<html>
+  <head>
+  <title>Jam Sholat</title>
+
+<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+  <body>
+  <!-- Layout -->
+  <button type="button" class="datetimex">show modal</button>
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            
+            <ul class="nav nav-pills" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
+              </li>
+            </ul>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+           
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="home-tab">1...</div>
+              <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="profile-tab">2...</div>
+              <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="contact-tab">3...</div>
+            </div>
+            
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary modal-save">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/moment/moment-with-locales.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="vendor/adhan/Adhan.js"></script>
+  <script src="vendor/moment-hijri/moment-hijri.js"></script>
+  <script src="vendor/nosleep/NoSleep.min.js"></script>
+  <script src="vendor/ckeditor/ckeditor.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/settings.js"></script>
+  
+  <!-- iframe src="audio/silence.mp3" allow="autoplay" id="audio" style="display: none"></iframe -->
+  </body>
+  
+  </html>

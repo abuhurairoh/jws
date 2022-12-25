@@ -1,0 +1,28 @@
+{
+  "short_name": "Jam Sholat",
+  "name": "Jam Sholat",
+  "description": "Jam Sholat",
+  "version": "0.2",
+  "background_color": "#000000",
+  "theme_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "landscape",
+  "icons": [
+    {
+      "src": "media/android-icon-48x48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "media/android-icon-96x96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "media/android-icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/jamsholat2/index.html"
+}

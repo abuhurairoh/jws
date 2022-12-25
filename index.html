@@ -1,0 +1,390 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--
+Jam Sholat 2 Alpha
+Author : susilonurcahyo@gmail.com
+
+Copyright 2021 Susilo Nurcahyo
+
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Credits :
+Adhan -  MIT License
+Bootstrap -  MIT License
+jQuery -  MIT License
+Moment js -  MIT License
+Moment-Hijri -  MIT License
+The Roboto Light Fonts -  Apache License, Version 2.0. 
+CKEditor 4
+-->
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Jam Sholat cantik untuk di meja."/>
+<meta property="og:site_name" content="Jam Sholat">
+<meta property="og:title" content="Jam Sholat" />
+<meta property="og:description" content="Jam Sholat cantik untuk di meja." />
+<meta property="og:type" content="website" />
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" sizes="57x57" href="media/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="media/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="media/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="media/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="media/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="media/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="media/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="media/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="media/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="media/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="media/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="media/favicon-16x16.png">
+<link rel="manifest" href="manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="media/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<title>Jam Sholat</title>
+
+<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+    body {
+        /*background-image: url('images/mountain.gif');*/
+        background-color: #000000;
+        background-size: cover;
+        background-repeat: no-repeat;
+        color: white;
+        margin: 0px !important;
+        padding: 0px !important;
+        overflow: hidden;
+    }
+    .time-box {        
+        margin: 3px;
+        border: solid 3px rgba(0,99,0,0.85);
+        border-radius: 7px;
+        padding: 0px;
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+    }
+    .time-box > .time-label {
+        color: white;
+        background-color: rgba(0,99,0,0.85);
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
+        font-size: 29px;
+        font-weight: bold;
+        text-align: center;
+        width: 100%;
+        flex: 0 1 auto;
+    }
+    .time-box > .time-data {
+        background-color: rgba(0,0,0,0.5);  
+        border-bottom-right-radius: 3px;
+        border-bottom-left-radius: 3px;      
+        font-size: 59px;
+        font-weight: bold;
+        text-align: center;
+        width: 100%;      
+        flex: 1 1 auto;
+    }
+    .datetime {
+        color: white;
+        font-size: 53px;
+        z-index: 999;
+        float: right;
+        text-align: right;
+    }
+    .header {
+        position: absolute;
+        width: 100%;                
+        top: 0px;
+        left: 0px;
+    }
+    .header > .first {
+        padding: 20px;
+        background-color: rgba(0,0,0,0.5);
+        font-size: 37px;
+        font-weight: bold;
+    }
+    .alamat {
+        font-size: 21px;
+        font-weight: normal;
+    }
+    .footer {        
+        position: absolute;
+        bottom: 50px;           
+        height: 160px; /* Set the fixed height of the footer here */
+        width: 100%;
+    }
+    .footer2 {        
+        position: absolute;
+        bottom: 0px;           
+        height: 39px; /* Set the fixed height of the footer here */
+        width: 100%;
+        background-color: blue;
+    }
+    .next {
+        border-color: yellow !important;
+    }
+    .pray-active {
+        border-color: red !important;
+    }
+    @keyframes blinkingred {
+        0% {
+            background-color: rgba(255,0,0,1);
+        }
+        100% {
+            background-color: rgba(0,0,0,0.5);
+        }
+      }
+    @keyframes blinkinggreen {
+        0% {
+            background-color: rgb(0, 255, 0);
+        }
+        100% {
+            background-color: rgba(0,0,0,0.5);
+        }
+      }
+    @keyframes backgroundColorPalette {
+        0% {
+            background: #006BA6;
+        }
+        25% {
+            background: #0496FF;
+        }
+        50% {
+            background: #2D3047;
+        }
+        75% {
+            background: #D81159;
+        }
+        100% {
+            background: #B80C09;
+        }
+    }
+    .blink-green {
+        animation: blinkinggreen 1s infinite;
+      }
+    .blink-red {
+        animation: blinkingred 1s infinite;
+      }
+    .colorRotate {
+        animation-name: backgroundColorPalette;
+        animation-duration: 10s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+      }
+    .scrolling-text {
+        font-size: 19px;
+        line-height: 39px;        
+    }
+    .video-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%; 
+        overflow: hidden;
+        z-index: 0;
+    }
+    .video-container video {
+        /* Make video to at least 100% wide and tall */
+        min-width: 100%; 
+        min-height: 100%; 
+
+        /* Setting width & height to auto prevents the browser from stretching or squishing the video */
+        width: auto;
+        height: auto;
+
+        /* Center the video */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        overflow: hidden;
+    }
+    .main-container {
+        z-index: 999;
+    }
+    .header .content {
+        margin-left:25%;
+    }
+    .header .content .info {
+        background-color: rgba(0,0,0,0.5);
+        text-align: right;
+        min-height: 150px;
+        min-width: 50%;        
+        border-radius: 11px;
+        padding: 12px;
+        font-size: 21px;
+    }
+    .modal {
+        color: black;
+    }
+    .modal .nav-link {
+        padding: .1rem 1rem;
+    }
+    .marquee-container {          
+        min-height: 23px;
+        line-height: 23px;
+    }
+
+    .marquee {
+        min-width: 100%;
+        width: max-content; 
+        margin: 0 auto;
+        white-space: nowrap;
+        overflow: hidden;
+        position: absolute;            
+        line-height: 33px;
+        font-size: 27px;
+        font-weight: bold;
+    }
+    .marquee span {
+        display: inline-block;
+        padding-left: 100%;
+        animation: marquee 30s linear infinite;
+    }
+
+    .marquee2 span {
+        animation-delay: 15s;
+    }
+
+    @keyframes marquee {
+        0% {
+        transform: translate(0, 0);
+        }
+        100% {
+        transform: translate(-100%, 0);
+        }
+    }
+
+    .slidecontainer {
+        width: 100%;
+    }
+
+    .slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 25px;
+        background: #d3d3d3;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+    }
+
+    .slider:hover {
+        opacity: 1;
+    }
+
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        background: #4CAF50;
+        cursor: pointer;
+        border-radius: 13px;
+    }
+
+    .slider::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        background: #4CAF50;
+        cursor: pointer;
+        border-radius: 13px;
+    }
+</style>
+
+</head>
+    
+<body>
+<!-- Video Background -->    
+<div class="video-container hide-onpray">
+<video autoplay muted class="video" id='bg-video'>
+    <source src="videos/tawaf.mp4" type="video/mp4">
+</video>
+</div>
+
+<!-- Layout -->    
+<div class="main-container container-fluid">
+    
+    <div class="header">
+        <div class="row first">
+            <div class="col-5"><span class="nama" data-label="Nama Masjid" data-value="">Nama Masjid</span><br><span class="alamat" data-label="Alamat Masjid" data-value="">Alamat Lengkap dan Nomor Telepon</span></div>
+            <div class="col-7"><div class="datetime"></div></div>
+        </div>
+
+        <div class="row mt-3 mr-1 content hide-onpray">
+            <div class="col">
+                <div class="float-right info"></div>        
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer row hide-onpray">   
+        <div class="col-sm time-box"><div class="time-label" data-label="Imsak" data-value="Imsak">Imsak</div> <div class="imsak time-data"></div></div>
+        <div class="col-sm time-box"><div class="time-label" data-label="Subuh" data-value="Subuh">Subuh</div> <div class="subuh time-data"></div></div>
+        <div class="col-sm time-box"><div class="time-label" data-label="Terbit" data-value="Terbit">Terbit</div> <div class="terbit time-data"></div></div>
+        <div class="col-sm time-box"><div class="time-label" data-label="Dzuhur" data-value="Dzuhur">Dzuhur</div> <div class="dzuhur time-data"></div></div>
+        <div class="col-sm time-box"><div class="time-label" data-label="Ashar" data-value="Ashar">Ashar</div> <div class="ashar time-data"></div></div>
+        <div class="col-sm time-box"><div class="time-label" data-label="Maghrib" data-value="Maghrib">Maghrib</div> <div class="maghrib time-data"></div></div>
+        <div class="col-sm time-box"><div class="time-label" data-label="Isya" data-value="Isya">Isya</div> <div class="isya time-data"></div></div>
+    </footer>
+
+    <footer class="footer2 row colorRotate">  
+        <div class='marquee-container' style='color:yellow;' data-speed='30' data-label='Scrolling Text' 
+        data-value=''
+        data-value-onpray=''> 
+            <p class='marquee'><span></span></p>
+            <p class='marquee marquee2'><span></span></p>
+        </div>
+    </footer>
+
+</div>           
+
+<!-- Layout -->
+<!-- Modal -->
+<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Settings
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary modal-save">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/moment/moment-with-locales.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/adhan/Adhan.js"></script>
+<script src="vendor/moment-hijri/moment-hijri.js"></script>
+<script src="vendor/ckeditor/ckeditor.js"></script>
+<script src="js/app.js"></script>
+<script src="js/settings.js"></script>
+
+<!-- iframe src="audio/silence.mp3" allow="autoplay" id="audio" style="display: none"></iframe -->
+</body>
+
+</html>
