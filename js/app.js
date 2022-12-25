@@ -92,7 +92,9 @@ if (global == null) {
             beepType: 'square',
             beepDuration: 150
         },
-        videolist: videolist
+        videolist: [
+            "tawaf.mp4"
+        ]
     }
     localStorage.configuration = JSON.stringify(global);    
 }
