@@ -4,11 +4,13 @@ modal.on('shown.bs.modal', function() {
 });
 
 function resetModal() {
+  modal.off('click');
+  $('.form-calculation').off();
   modal.find('.modal-title').text('Settings');
   modal.find('.modal-body').html("Setting");
   modal.find('.modal-save').off();
   modal.find('.generalSettingsHeader').remove();
-  modal.find('.modal-header H5').css('display','');
+  modal.find('.modal-header H5').css('display','');  
 }
 
 function showGeneralSettings(callback) {
@@ -22,13 +24,16 @@ function showGeneralSettings(callback) {
 
   var generalSettingsHeader = '<ul class="nav nav-pills generalSettingsHeader" role="tablist">\
   <li class="nav-item" role="presentation">\
-    <a class="nav-link active" id="pills-general-tab" data-toggle="pill" href="#pills-general" role="tab" aria-controls="pills-home" aria-selected="true">General</a>\
+    <a class="nav-link active" id="pills-general-tab" data-toggle="pill" href="#pills-general" role="tab" aria-controls="pills-general" aria-selected="true">General</a>\
   </li>\
   <li class="nav-item" role="presentation">\
-    <a class="nav-link" id="pills-about-tab" data-toggle="pill" href="#pills-about" role="tab" aria-controls="pills-profile" aria-selected="false">About</a>\
+    <a class="nav-link" id="pills-about-tab" data-toggle="pill" href="#pills-about" role="tab" aria-controls="pills-about" aria-selected="false">About</a>\
   </li>\
   <li class="nav-item" role="presentation">\
-    <a class="nav-link" id="pills-credits-tab" data-toggle="pill" href="#pills-credits" role="tab" aria-controls="pills-profile" aria-selected="false">Credits</a>\
+    <a class="nav-link" id="pills-credits-tab" data-toggle="pill" href="#pills-credits" role="tab" aria-controls="pills-credits" aria-selected="false">Credits</a>\
+  </li>\
+  <li class="nav-item" role="presentation">\
+    <a class="nav-link" id="pills-videolist-tab" data-toggle="pill" href="#pills-videolist" role="tab" aria-controls="pills-videolist" aria-selected="false">Video List</a>\
   </li>\
   </ul>';
   var calculationForm = '<form class="form-calculation"> \
@@ -100,11 +105,14 @@ function showGeneralSettings(callback) {
   <b>Video Credits :</b><br>\
   Tawaf around the Kaaba - Hajj and Umrah Youtube Channel';
 
+  var videoListForm = generateVideoList();
+
   var generalSettingsForm = '<div class="tab-content">\
-  <div class="tab-pane fade show active" id="pills-general" role="tabpanel" aria-labelledby="home-tab">' + calculationForm + '</div>\
-  <div class="tab-pane fade" id="pills-about" role="tabpanel" aria-labelledby="profile-tab">' + aboutForm + '</div>\
-  <div class="tab-pane fade" id="pills-credits" role="tabpanel" aria-labelledby="profile-tab">' + creditsForm + '</div>\
-  </div>';
+  <div class="tab-pane fade show active" id="pills-general" role="tabpanel" aria-labelledby="general-tab">' + calculationForm + '</div>\
+  <div class="tab-pane fade" id="pills-about" role="tabpanel" aria-labelledby="about-tab">' + aboutForm + '</div>\
+  <div class="tab-pane fade" id="pills-credits" role="tabpanel" aria-labelledby="credits-tab">' + creditsForm + '</div>\
+  <div class="tab-pane fade" id="pills-videolist" role="tabpanel" aria-labelledby="videolist-tab">' + videoListForm + '</div>\
+  </div>';  
 
   var originalBeepVol = global.beep.beepVolume;
   
@@ -112,7 +120,23 @@ function showGeneralSettings(callback) {
   modal.find('.modal-header H5').css('display','none');
   modal.find('.modal-header').prepend(generalSettingsHeader);
   modal.find('.modal-body').html(generalSettingsForm);
-  modal.find('.modal-save').click(function() {         
+  
+  $('.form-calculation').on('change','#form-volume', function() {
+    global.beep.beepVolume = $(this).val()/100;
+    playBeep('s');
+  });
+  
+  modal.on('hidden.bs.modal', function () {
+    global.beep.beepVolume = originalBeepVol;
+  })
+
+  modal.modal('show');
+
+  setTimeout(function() {    
+    $('#form-value').focus();
+  }, 500); 
+
+  modal.on('click', '.modal-save', function() {
     global.locale = $('#form-locale').val();
     global.madhab = $('#form-madhab').val();
     global.calculation = $('#form-calculation').val();
@@ -132,20 +156,48 @@ function showGeneralSettings(callback) {
     $('.form-calculation').off();
   });
 
-  $('.form-calculation').on('change','#form-volume', function() {
-    global.beep.beepVolume = $(this).val()/100;
-    playBeep('s');
+  modal.on('click', '.btn-videolist-add', function() {
+    console.log('add video');
+    modal.find(".list-new-video").show();
+    modal.find("#new-video").focus();
   });
-  
-  modal.on('hidden.bs.modal', function () {
-    global.beep.beepVolume = originalBeepVol;
-  })
 
-  modal.modal('show');
+  modal.on('click', '.btn-videolist-save', function() {    
+    global.videolist.push(modal.find("#new-video").val());
+    console.log(global.videolist);
+    var videoListForm = generateVideoList();
+    modal.find("#pills-videolist").html(videoListForm);
+    modal.find(".list-new-video").hide();
+  });
 
-  setTimeout(function() {    
-    $('#form-value').focus();
-  }, 500); 
+  modal.on('click', '.btn-videolist-remove', function() {
+    console.log('remove video ' + $(this).attr("data-value"));
+    var removeIndex = global.videolist.indexOf($(this).attr("data-value"));  
+    global.videolist.splice(removeIndex, 1);
+    var videoListForm = generateVideoList();
+    modal.find("#pills-videolist").html(videoListForm);
+    modal.find(".list-new-video").hide();
+  });
+
+  modal.find(".list-new-video").hide();
+}
+
+function generateVideoList() {
+  var videolistgroup = `<ul class="list-group">
+  <li class="list-group-item list-new-video"><span class="float-left w-50">
+  <input type="text" class="form-control" id="new-video">
+  </span><button class="btn btn-sm btn-success float-right btn-videolist-save">Simpan</button></li>`;
+  $.each(global.videolist, function(vlidx, vlitem) {
+    videolistgroup += `<li class="list-group-item"><span class="float-left">${ vlitem }</span><button class="btn btn-sm btn-danger float-right btn-videolist-remove" data-value="${ vlitem }">Hapus</button></li>`;
+  });  
+  videolistgroup += `</ul>`;
+
+  var videoListForm = `Background Video List<br><small>Copy file video MP4 ke folder videos untuk menambahkan video, <br>
+  kemudian klik tombol Tambah, dan masukkan nama file, kemudian klik tombol Simpan dan Save changes<br><br>
+  ${ videolistgroup }<br>
+  <button class="btn btn-sm btn-primary btn-videolist-add">Tambah</button></small>`;
+
+  return videoListForm;
 }
 
 function showSettingsLabel(me, target, callback) {

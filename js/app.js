@@ -92,9 +92,7 @@ if (global == null) {
             beepType: 'square',
             beepDuration: 150
         },
-        videolist: [            
-            "tawaf.mp4"
-        ]
+        videolist: videolist
     }
     localStorage.configuration = JSON.stringify(global);    
 }
@@ -502,14 +500,15 @@ $.each(global.prayer, function( index, value ) {
 });
 
 // start video background
-var videoList = global.videolist;
 var videoPlayer = document.getElementById('bg-video');
-var ctr = 1;
-//console.log(videoList);
-videoPlayer.onended = function(){    
-    videoPlayer.src = 'videos/'+videoList[ctr];
+var ctr = 0;
+console.log('playing videos/' + global.videolist[ctr] + ' of ' + global.videolist.length + ' videos');
+videoPlayer.src = 'videos/'+global.videolist[ctr];
+videoPlayer.onended = function(){
+    console.log('playing videos/' + global.videolist[ctr] + ' of ' + global.videolist.length + ' videos');
+    videoPlayer.src = 'videos/'+global.videolist[ctr];
     ctr++;
-    if (ctr >= videoList.length) {
+    if (ctr >= global.videolist.length) {
         ctr = 0;
     }
 }
