@@ -92,13 +92,9 @@ if (global == null) {
             beepType: 'square',
             beepDuration: 150
         },
-        videolist: [
-            //"bantarkuning.mp4", 
-            //"lrtjakarta.mp4",
-            //"indonesia73tahun.mp4",
-            "tawaf.mp4",
-            "everest.mp4",
-            "dayandnight.mp4"]
+        videolist: [            
+            "tawaf.mp4"
+        ]
     }
     localStorage.configuration = JSON.stringify(global);    
 }
@@ -509,7 +505,7 @@ $.each(global.prayer, function( index, value ) {
 var videoList = global.videolist;
 var videoPlayer = document.getElementById('bg-video');
 var ctr = 1;
-console.log(videoList);
+//console.log(videoList);
 videoPlayer.onended = function(){    
     videoPlayer.src = 'videos/'+videoList[ctr];
     ctr++;
