@@ -37,7 +37,7 @@ if (global == null) {
     global = {
         locale : 'id',
         calculation : 0,
-        latlngdata : '-6.224655537226517, 106.80679437749554',    
+        latlngdata : '0.533505, 101.447403',    
         fajrAngle : 19.5,
         ishaAngle : 17.5,
         madhab : 'syafii',
